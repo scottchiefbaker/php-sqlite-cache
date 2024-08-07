@@ -47,6 +47,10 @@ class Cache {
 			Value BLOB
 		);";
 
+		// Clean up the SQL so it's easier to read in .dump
+		$sql = preg_replace("/\t+/", "\t", $sql);
+		$sql = preg_replace("/\t\);/", ");", $sql);
+
 		$ok  = $this->pdo->exec($sql);
 		chmod($this->db_file, 0666);
 
