@@ -78,14 +78,14 @@ class Sqlite {
 		$ok  = $sth->execute([$key]);
 		$ret = $sth->fetch(\PDO::FETCH_NUM);
 
-		$rowid  = $ret[0] ?? -1;
+		$row_id = $ret[0] ?? 0;
 		$data   = $ret[1] ?? "";
 		$expire = $ret[2] ?? 0;
 		$now    = time();
 
 		// If it's expired we remove it from the DB and return null
-		if ($now > $expire) {
-			$this->delete_cache_item($key);
+		if ($row_id && $now > $expire) {
+			$this->remove_expired_entries(0);
 			$ret = null;
 		} else {
 			$ret = $this->unpack($data);
