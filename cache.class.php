@@ -83,7 +83,7 @@ class Cache {
 
 		// If it's expired we remove it from the DB and return null
 		if ($now > $expire) {
-			$this->delete($key);
+			$this->delete_cache_item($key);
 			$ret = null;
 		} else {
 			$ret = $this->unpack($data);
@@ -93,7 +93,7 @@ class Cache {
 	}
 
 	// Delete an item from the cache
-	public function delete($key) {
+	public function delete_cache_item($key) {
 		$sql = "DELETE FROM cache WHERE Key = ?;";
 
 		$sth = $this->pdo->prepare($sql);
