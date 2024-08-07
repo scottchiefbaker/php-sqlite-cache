@@ -1,6 +1,8 @@
 <?php
 
-class Cache {
+namespace Scottchiefbaker\Cache;
+
+class Sqlite {
 	public $pdo     = null; // PDO Object
 	public $db_file = "";   // Path to the SQLite file
 	public $mode    = "";   // 'json', 'igb', 'msgp'
@@ -11,7 +13,7 @@ class Cache {
 		$missing_db    = !file_exists($this->db_file);
 		$dsn           = "sqlite:" . $this->db_file;
 
-		$this->pdo  = new PDO($dsn);
+		$this->pdo  = new \PDO($dsn);
 		$this->mode = $opts['mode'] ?? "";
 
 		if ($this->mode) {
@@ -74,7 +76,7 @@ class Cache {
 		}
 
 		$ok  = $sth->execute([$key]);
-		$ret = $sth->fetch(PDO::FETCH_NUM);
+		$ret = $sth->fetch(\PDO::FETCH_NUM);
 
 		$rowid  = $ret[0] ?? -1;
 		$data   = $ret[1] ?? "";
@@ -114,10 +116,10 @@ class Cache {
 		$enc = $this->pack($value);
 
 		$sth = $this->pdo->prepare($sql);
-		$sth->bindParam(":key"    , $key    , PDO::PARAM_STR);
-		$sth->bindParam(":value"  , $enc    , PDO::PARAM_LOB);
-		$sth->bindParam(":expires", $expires, PDO::PARAM_INT);
-		$sth->bindParam(":create" , $create , PDO::PARAM_INT);
+		$sth->bindParam(":key"    , $key    , \PDO::PARAM_STR);
+		$sth->bindParam(":value"  , $enc    , \PDO::PARAM_LOB);
+		$sth->bindParam(":expires", $expires, \PDO::PARAM_INT);
+		$sth->bindParam(":create" , $create , \PDO::PARAM_INT);
 		$ok  = $sth->execute();
 
 		return $ok;
