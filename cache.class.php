@@ -149,6 +149,16 @@ class Cache {
 		return $ret;
 	}
 
+	public function remove_expired_entries() {
+		$sql = "DELETE FROM cache WHERE ExpireTime < ?;";
+
+		$now = time();
+		$sth = $this->pdo->prepare($sql);
+		$ok  = $sth->execute([$now]);
+
+		return $ok;
+	}
+
 	// Spit out an error message
 	public function error_out($msg, int $err_num) {
 		$style = "
