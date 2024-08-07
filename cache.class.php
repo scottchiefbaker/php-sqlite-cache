@@ -38,7 +38,7 @@ class Sqlite {
 	public function __destruct() { }
 
 	// Create/Erase the database structure
-	public function init_db() {
+	public function init_db($silent = 0) {
 		$sql = "DROP TABLE IF EXISTS cache;";
 		$ok  = $this->pdo->exec($sql);
 
@@ -56,6 +56,9 @@ class Sqlite {
 		$ok  = $this->pdo->exec($sql);
 		chmod($this->db_file, 0666);
 
+		if (!$silent) {
+			print "<div style=\"background: lightblue; color blue; border: 1px solid darkblue; padding: 6px; border-radius: 4px;\"><b>Info:</b> database initialized</div>";
+		}
 		return $ok;
 	}
 
