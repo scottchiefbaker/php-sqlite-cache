@@ -149,14 +149,26 @@ class Cache {
 		return $ret;
 	}
 
-	public function remove_expired_entries() {
+	// Remove any expired entries from the database
+	public function remove_expired_entries($vacuum = 1) {
 		$sql = "DELETE FROM cache WHERE ExpireTime < ?;";
 
 		$now = time();
 		$sth = $this->pdo->prepare($sql);
 		$ok  = $sth->execute([$now]);
 
+		if ($vacuum) {
+			$this->vacuum();
+		}
+
 		return $ok;
+	}
+
+	// Run VACUUM on the SQLite DB to free up disk space
+	public function vacuum() {
+		$sql = "VACUUM";
+		$sth = $this->pdo->prepare($sql);
+		$ok  = $sth->execute();
 	}
 
 	// Spit out an error message
