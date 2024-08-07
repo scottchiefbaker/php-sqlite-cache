@@ -6,7 +6,8 @@ class Cache {
 	public $mode    = "";   // 'json', 'igb', 'msgp'
 
 	public function __construct($opts = []) {
-		$this->db_file = $opts['db_file'] ?? "/dev/shm/cache.sqlite";
+		$id            = $opts['id']      ?? "0001";
+		$this->db_file = $opts['db_file'] ?? "/dev/shm/cache-$id.sqlite";
 		$missing_db    = !file_exists($this->db_file);
 		$dsn           = "sqlite:" . $this->db_file;
 
