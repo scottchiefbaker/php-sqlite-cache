@@ -1,7 +1,5 @@
 <?php
 
-////////////////////////////////////////////////////////
-
 class Cache {
 	public $pdo     = null; // PDO Object
 	public $db_file = "";   // Path to the SQLite file
@@ -223,7 +221,5 @@ class Cache {
 		exit;
 	}
 }
-
-////////////////////////////////////////////////////////
 
 // vim: tabstop=4 shiftwidth=4 noexpandtab autoindent softtabstop=4
