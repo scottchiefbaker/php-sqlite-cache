@@ -54,11 +54,16 @@ class Sqlite {
 		$sql = preg_replace("/\t\);/", ");", $sql);
 
 		$ok  = $this->pdo->exec($sql);
+
+		$sql = "CREATE INDEX ExpireTimeIndex ON cache (ExpireTime)";
+		$ok  = $this->pdo->exec($sql);
+
 		chmod($this->db_file, 0666);
 
 		if (!$silent) {
 			print "<div style=\"background: lightblue; color blue; border: 1px solid darkblue; padding: 6px; border-radius: 4px;\"><b>Info:</b> database initialized</div>";
 		}
+
 		return $ok;
 	}
 
