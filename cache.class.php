@@ -114,8 +114,12 @@ class Sqlite {
 
 	// Write/Replace a cache entry into the cache
 	public function set($key, $value, $expires = 0) {
+		// Default to caching for an hour
 		if (empty($expires)) {
 			$expires = time() + 3600;
+		// $expires less than 100000 means cache for that many seconds
+		} elseif ($expires < 100000) {
+			$expires = time() + $expires;
 		}
 
 		$sql    = "REPLACE INTO cache (Key, Value, ExpireTime, CreateTime) VALUES (:key, :value, :expires, :create);";
