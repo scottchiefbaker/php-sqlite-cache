@@ -1,13 +1,14 @@
 # PHP SQLite Object Cache
 
-PHP Object Caching system with a SQLite backend store with automatic content expiration.
-We use a SQLite database in a RAM disk in `/dev/shm`.
+PHP Object Caching system with a SQLite backend store and automatic content expiration.
+Stored using a SQLite database in a RAM disk in `/dev/shm`.
 
 ## Requirements
 
 * PHP 8.0+
-* SQLite compiled into PHP
-* JSON compiled into PHP
+* PDO functions in PHP
+* SQLite functions in PHP
+* JSON functions in PHP
 * Ability to write to `/dev/shm`
 
 ## Optional components
@@ -16,7 +17,7 @@ We use a SQLite database in a RAM disk in `/dev/shm`.
 * msgpack
 
 If either **igbinary** or **msgpack** modules are available we will automatically use them
-as the serialization method for the database. If neither are available we fall back
+as the serialization storage method in the database. If neither are available we fall back
 to JSON.
 
 ## Usage
@@ -39,9 +40,9 @@ $data = $cache->get($key);
 
 ## Cleanup
 
-Over time objects will be added and deleted. This may create fragmentation in the
-database so it might be a good idea to `VACUUM` it every so often. We have provided
-a method to do this:
+Over time objects will be added and deleted to the cache. This *may* create
+fragmentation in the database so it might be a good idea to `VACUUM` it every
+so often. We have provided a method to do this:
 
 ```PHP
 // Remove all expired entries and defragment the database
@@ -54,7 +55,7 @@ $ok     = remove_expired_entries($vacuum);
 function get_slow_data($id) {
 	global $cache;
 
-	$ckey = "cust:$id";
+	$ckey = "item:$id";
 	$data = $cache->get($ckey);
 
 	if ($data) { return $data; }
