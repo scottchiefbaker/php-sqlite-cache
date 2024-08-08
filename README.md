@@ -47,7 +47,7 @@ so often. We have provided a method to do this:
 ```PHP
 // Remove all expired entries and defragment the database
 $vacuum = true;
-$ok     = remove_expired_entries($vacuum);
+$ok     = $cache->remove_expired_entries($vacuum);
 ```
 
 ## Real World Example
