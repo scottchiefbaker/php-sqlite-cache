@@ -23,7 +23,7 @@ to JSON.
 ## Usage
 
 ```PHP
-require("cache.class.php");
+require("/path/to/dir/cache.class.php");
 
 $cache = new \Scottchiefbaker\Cache\Sqlite();
 
