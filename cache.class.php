@@ -3,9 +3,10 @@
 namespace Scottchiefbaker\Cache;
 
 class Sqlite {
-	public $pdo     = null; // PDO Object
-	public $db_file = "";   // Path to the SQLite file
-	public $mode    = "";   // 'json', 'igb', 'msgp'
+	public $pdo      = null;  // PDO Object
+	public $db_file  = "";    // Path to the SQLite file
+	public $mode     = "";    // 'json', 'igb', 'msgp'
+	public $disabled = false; // Used to disable cache at runtime
 
 	public function __construct($opts = []) {
 		$id            = $opts['id']      ?? "0001";
@@ -70,6 +71,8 @@ class Sqlite {
 
 	// Read an item from the cache
 	public function get($key) {
+		if ($this->disabled) { return null; }
+
 		$sql = "SELECT rowid, Value, ExpireTime FROM cache WHERE Key = ?;";
 
 		try {
@@ -115,6 +118,8 @@ class Sqlite {
 
 	// Write/Replace a cache entry into the cache
 	public function set($key, $value, $expires = 0) {
+		if ($this->disabled) { return null; }
+
 		// Default to caching for an hour
 		if (empty($expires)) {
 			$expires = time() + 3600;
