@@ -74,6 +74,31 @@ class Sqlite {
 		return $ok;
 	}
 
+	public function cached_item_count() {
+		if ($this->disabled) { return null; }
+
+		$epoch = time();
+		$sql   = "SELECT count(Key) FROM cache WHERE ExpireTime > $epoch;";
+
+		try {
+			$sth = $this->pdo->prepare($sql);
+		} catch (PDOException $e) {
+			$code = $e->getCode();
+			if ($code === "HY000") {
+				$this->error_out("Table 'cache' missing. DB corrupt?", 59029);
+			} else {
+				$this->error_out($e->getMessage(), 94816);
+			}
+
+		}
+
+		$ok  = $sth->execute();
+		$ret = $sth->fetch(\PDO::FETCH_NUM);
+		$ret = $ret[0] ?? -1;
+
+		return $ret;
+	}
+
 	// Read an item from the cache
 	public function get($key) {
 		if ($this->disabled) { return null; }
