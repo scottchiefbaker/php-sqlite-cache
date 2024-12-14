@@ -47,6 +47,8 @@ class Sqlite {
 
 	// Create/Erase the database structure
 	public function init_db($silent = 0) {
+		if ($this->disabled) { return null; }
+
 		$sql = "DROP TABLE IF EXISTS cache;";
 		$ok  = $this->pdo->exec($sql);
 
@@ -139,6 +141,8 @@ class Sqlite {
 
 	// Delete an item from the cache
 	public function delete_cache_item($key) {
+		if ($this->disabled) { return null; }
+
 		$sql = "DELETE FROM cache WHERE Key = ?;";
 
 		$sth = $this->pdo->prepare($sql);
@@ -206,6 +210,8 @@ class Sqlite {
 
 	// Remove any expired entries from the database
 	public function remove_expired_entries($vacuum = 1) {
+		if ($this->disabled) { return null; }
+
 		$sql = "DELETE FROM cache WHERE ExpireTime < ?;";
 
 		$now = time();
@@ -221,6 +227,8 @@ class Sqlite {
 
 	// Run VACUUM on the SQLite DB to free up disk space
 	public function vacuum() {
+		if ($this->disabled) { return null; }
+
 		$sql = "VACUUM";
 		$sth = $this->pdo->prepare($sql);
 		$ok  = $sth->execute();
@@ -228,6 +236,8 @@ class Sqlite {
 
 	// Completely empty the cache
 	public function empty_cache() {
+		if ($this->disabled) { return null; }
+
 		// Delete ALL keys/values from the cache
 		$sql = "DELETE FROM cache;";
 
