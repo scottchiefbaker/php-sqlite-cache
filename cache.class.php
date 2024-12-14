@@ -7,6 +7,7 @@ class Sqlite {
 	public $db_file  = "";    // Path to the SQLite file
 	public $mode     = "";    // 'json', 'igb', 'msgp'
 	public $disabled = false; // Used to disable cache at runtime
+	public $version  = 0.2;   // Version of the library
 
 	public function __construct($opts = []) {
 		$id            = $opts['id']      ?? "0001";
