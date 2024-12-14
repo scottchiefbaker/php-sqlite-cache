@@ -14,6 +14,11 @@ class Sqlite {
 		$silent        = $opts['silent']  ?? false;
 		$missing_db    = !file_exists($this->db_file);
 		$dsn           = "sqlite:" . $this->db_file;
+		$db_dir        = dirname($this->db_file) . "/";
+
+		if (!is_writable($db_dir)) {
+			$this->error_out("directory <code>$db_dir</code> is not writable", 12309);
+		}
 
 		$this->pdo  = new \PDO($dsn);
 		$this->mode = $opts['mode'] ?? "";
