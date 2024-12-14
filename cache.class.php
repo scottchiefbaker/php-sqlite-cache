@@ -200,6 +200,22 @@ class Sqlite {
 		$ok  = $sth->execute();
 	}
 
+	// Completely empty the cache
+	public function empty_cache() {
+		// Delete ALL keys/values from the cache
+		$sql = "DELETE FROM cache;";
+
+		$sth = $this->pdo->prepare($sql);
+		$ok  = $sth->execute();
+
+		$count = $sth->rowCount();
+
+		// After we empty the cache we clear up the DB
+		$this->vacuum();
+
+		return $count;
+	}
+
 	// Spit out an error message
 	public function error_out($msg, int $err_num) {
 		$style = "
