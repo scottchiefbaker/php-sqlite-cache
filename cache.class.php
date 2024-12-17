@@ -13,6 +13,7 @@ class Sqlite {
 		$id            = $opts['id']      ?? "0001";
 		$this->db_file = $opts['db_file'] ?? "/dev/shm/cache-$id.sqlite";
 		$silent        = $opts['silent']  ?? false;
+		$this->mode    = $opts['mode']    ?? "";
 		$missing_db    = !file_exists($this->db_file);
 		$dsn           = "sqlite:" . $this->db_file;
 		$db_dir        = dirname($this->db_file) . "/";
@@ -21,8 +22,7 @@ class Sqlite {
 			$this->error_out("directory <code>$db_dir</code> is not writable", 12309);
 		}
 
-		$this->pdo  = new \PDO($dsn);
-		$this->mode = $opts['mode'] ?? "";
+		$this->pdo = new \PDO($dsn);
 
 		if ($this->mode) {
 			// Do nothing the user specified the mode
