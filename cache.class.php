@@ -77,6 +77,7 @@ class Sqlite {
 		return $ok;
 	}
 
+	// Return the number of items in the cache
 	public function cached_item_count() {
 		if ($this->disabled) { return null; }
 
