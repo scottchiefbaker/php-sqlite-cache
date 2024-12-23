@@ -38,6 +38,20 @@ $ok = $cache->set($key, $data, $expires);
 $data = $cache->get($key);
 ```
 
+## Methods
+
+### get($key)
+Returns stored object.
+
+### set($key, $object, $expire_time)
+Store an object in cache. Returns status of storage.
+
+### delete($key)
+Remove an item from cache. Returns status of deletion.
+
+### remove_expired_entries($vacuum_db);
+Remove all expired items from cache. If `$vacuum_db` is set, the DB will be vacuumed after removal.
+
 ## Cleanup
 
 Over time objects will be added and deleted to the cache. This *may* create
