@@ -141,7 +141,7 @@ class Sqlite {
 	}
 
 	// Delete an item from the cache
-	public function delete_cache_item($key) {
+	public function delete($key) {
 		if ($this->disabled) { return null; }
 
 		$sql = "DELETE FROM cache WHERE Key = ?;";
