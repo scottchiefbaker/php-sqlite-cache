@@ -12,7 +12,7 @@ class Sqlite {
 	public function __construct($opts = []) {
 		$id            = $opts['id']      ?? "0001";
 		$this->db_file = $opts['db_file'] ?? "/dev/shm/cache-$id.sqlite";
-		$silent        = $opts['silent']  ?? false;
+		$silent        = $opts['silent']  ?? true;
 		$this->mode    = $opts['mode']    ?? "";
 		$missing_db    = !file_exists($this->db_file);
 		$dsn           = "sqlite:" . $this->db_file;
