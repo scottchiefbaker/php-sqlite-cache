@@ -50,8 +50,14 @@ Store an object in cache. Returns status of storage.
 ### delete($key)
 Remove an item from cache. Returns status of deletion.
 
-### remove_expired_entries($vacuum_db);
+### cached_item_count()
+Return the number of active items in the cache.
+
+### remove_expired_entries($vacuum_db)
 Remove all expired items from cache. If `$vacuum_db` is set, the DB will be vacuumed after removal.
+
+### empty_cache()
+Remove **all** items from the cache.
 
 ## Cleanup
 
