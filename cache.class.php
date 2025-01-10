@@ -103,6 +103,34 @@ class Sqlite {
 		return $ret;
 	}
 
+	// Return the keys of all active cached items
+	public function cached_item_keys() {
+		if ($this->disabled) { return null; }
+
+		$epoch = time();
+		$sql   = "SELECT Key FROM cache WHERE ExpireTime > $epoch;";
+
+		try {
+			$sth = $this->pdo->prepare($sql);
+		} catch (PDOException $e) {
+			$code = $e->getCode();
+			if ($code === "HY000") {
+				$this->error_out("Table 'cache' missing. DB corrupt?", 90823);
+			} else {
+				$this->error_out($e->getMessage(), 75091);
+			}
+
+		}
+
+		$ok = $sth->execute();
+		while ($x = $sth->fetch(\PDO::FETCH_NUM)) {
+			$key   = $x[0] ?? '';
+			$ret[] = $key;
+		}
+
+		return $ret;
+	}
+
 	// Read an item from the cache
 	public function get($key) {
 		if ($this->disabled) { return null; }

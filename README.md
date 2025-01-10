@@ -53,6 +53,9 @@ Remove an item from cache. Returns status of deletion.
 ### cached_item_count()
 Return the number of active items in the cache.
 
+### cached_item_keys()
+Return array of all the active items in the cache.
+
 ### remove_expired_entries($vacuum_db)
 Remove all expired items from cache. If `$vacuum_db` is set, the DB will be vacuumed after removal.
 
