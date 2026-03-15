@@ -73,7 +73,7 @@ $vacuum = true;
 $ok     = $cache->remove_expired_entries($vacuum);
 ```
 
-## 🧹 Real World Example
+## 🌎 Real World Example
 ```PHP
 function get_slow_data($id) {
 	global $cache;
