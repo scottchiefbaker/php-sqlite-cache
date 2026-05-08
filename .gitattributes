@@ -1,0 +1,7 @@
+# This is used to create a "clean" archive on packagist.org
+# Test with: git archive --format=tar HEAD | tar -tf -
+
+# Exclude development-only directories
+/example.php export-ignore
+/.gitattributes export-ignore
+/.gitignore export-ignore
