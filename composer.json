@@ -1,0 +1,13 @@
+{
+    "name": "scottchiefbaker/cache_sqlite",
+    "description": "PHP object caching system with a SQLite backend store and automatic content expiration. Cache is stored using a SQLite database and persists on disk.",
+    "require": {
+        "php": ">=8.0"
+    },
+	"license": "MIT",
+	"keywords": ["object", "caching", "sqlite", "cache", "simple", "igbinary", "msgpack"],
+	"homepage": "https://github.com/scottchiefbaker/php-sqlite-cache",
+	"autoload": {
+		"files": ["cache.class.php"]
+	}
+}
