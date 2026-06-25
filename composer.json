@@ -4,6 +4,9 @@
     "require": {
         "php": ">=8.0"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0"
+    },
 	"license": "MIT",
 	"keywords": ["object", "caching", "sqlite", "cache", "simple", "igbinary", "msgpack"],
 	"homepage": "https://github.com/scottchiefbaker/php-sqlite-cache",
