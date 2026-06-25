@@ -1,1 +1,17 @@
 test.php
+
+# Dependencies
+/vendor/
+
+# PHPUnit
+.phpunit.cache/
+.phpunit.result.cache
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
