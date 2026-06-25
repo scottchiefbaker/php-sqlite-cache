@@ -274,4 +274,74 @@ class CacheTest extends TestCase
 	{
 		$this->assertSame(0.6, $this->cache->version);
 	}
+
+	private function createCacheWithMode(string $mode): Sqlite
+	{
+		$dbFile = sys_get_temp_dir() . '/sqlite_cache_test_' . uniqid() . '.sqlite';
+		return new Sqlite([
+			'db_file' => $dbFile,
+			'silent'  => true,
+			'mode'    => $mode,
+		]);
+	}
+
+	////////////////////////////////////////////////////////////////////////////////
+	// igbinary tests
+	////////////////////////////////////////////////////////////////////////////////
+
+	#[\PHPUnit\Framework\Attributes\RequiresPhpExtension('igbinary')]
+	public function testSetAndGetStringWithIgbinary(): void
+	{
+		$cache = $this->createCacheWithMode('igb');
+		$cache->set('name', 'Alice');
+		$this->assertSame('Alice', $cache->get('name'));
+	}
+
+	#[\PHPUnit\Framework\Attributes\RequiresPhpExtension('igbinary')]
+	public function testSetAndGetArrayWithIgbinary(): void
+	{
+		$cache = $this->createCacheWithMode('igb');
+		$data = ['foo' => 'bar', 'baz' => 123];
+		$cache->set('data', $data);
+		$this->assertSame($data, $cache->get('data'));
+	}
+
+	#[\PHPUnit\Framework\Attributes\RequiresPhpExtension('igbinary')]
+	public function testSetAndGetNestedArrayWithIgbinary(): void
+	{
+		$cache = $this->createCacheWithMode('igb');
+		$data = ['level1' => ['level2' => ['level3' => [1, 2, 3]]]];
+		$cache->set('nested', $data);
+		$this->assertSame($data, $cache->get('nested'));
+	}
+
+	////////////////////////////////////////////////////////////////////////////////
+	// msgpack tests
+	////////////////////////////////////////////////////////////////////////////////
+
+	#[\PHPUnit\Framework\Attributes\RequiresPhpExtension('msgpack')]
+	public function testSetAndGetStringWithMsgpack(): void
+	{
+		$cache = $this->createCacheWithMode('msgp');
+		$cache->set('name', 'Alice');
+		$this->assertSame('Alice', $cache->get('name'));
+	}
+
+	#[\PHPUnit\Framework\Attributes\RequiresPhpExtension('msgpack')]
+	public function testSetAndGetArrayWithMsgpack(): void
+	{
+		$cache = $this->createCacheWithMode('msgp');
+		$data = ['foo' => 'bar', 'baz' => 123];
+		$cache->set('data', $data);
+		$this->assertSame($data, $cache->get('data'));
+	}
+
+	#[\PHPUnit\Framework\Attributes\RequiresPhpExtension('msgpack')]
+	public function testSetAndGetNestedArrayWithMsgpack(): void
+	{
+		$cache = $this->createCacheWithMode('msgp');
+		$data = ['level1' => ['level2' => ['level3' => [1, 2, 3]]]];
+		$cache->set('nested', $data);
+		$this->assertSame($data, $cache->get('nested'));
+	}
 }
