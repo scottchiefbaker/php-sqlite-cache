@@ -89,6 +89,6 @@ function get_slow_data($id) {
 	// Store the data in the cache for two hours
 	$ok = $cache->set($ckey, $data, time() + 7200);
 
-	return $ret;
+	return $data;
 }
 ```
