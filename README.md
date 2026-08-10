@@ -27,6 +27,7 @@ require("/path/to/dir/cache.class.php");
 $opts = ["db_file" => "/var/tmp/mycache.sqlite"];
 $cache = new \Scottchiefbaker\Cache\Sqlite($opts);
 
+```PHP
 // Store an item
 $key     = "cust:123";
 $data    = ['name' => 'Jason Doolis', 'age' => 13, 'animal' => 'kitten'];
@@ -41,10 +42,13 @@ $data = $cache->get($key);
 ## 🎯 Methods
 
 ### get($key)
-Returns stored object.
+Returns stored object. Returns `null` if the key is missing or expired.
 
 ### set($key, $object, $expire_time)
-Store an object in cache. Returns status of storage.
+Store an object in cache. Returns status of storage. `$expire_time` accepts these forms:
+
+* a number less than `100000` — cache for that many seconds
+* a number more than `100000` — cache *until* that unixtime
 
 ### delete($key)
 Remove an item from cache. Returns status of deletion.
