@@ -1,7 +1,6 @@
 # 🧰 PHP SQLite object cache
 
 PHP object caching system with a SQLite backend store and automatic content expiration.
-Cache is stored using a SQLite database and persists on disk.
 
 ## 🛠️ Requirements
 
@@ -27,7 +26,6 @@ require("/path/to/dir/cache.class.php");
 $opts = ["db_file" => "/var/tmp/mycache.sqlite"];
 $cache = new \Scottchiefbaker\Cache\Sqlite($opts);
 
-```PHP
 // Store an item
 $key     = "cust:123";
 $data    = ['name' => 'Jason Doolis', 'age' => 13, 'animal' => 'kitten'];
