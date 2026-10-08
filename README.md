@@ -85,7 +85,7 @@ function get_slow_data($id) {
 
 	if ($data) { return $data; }
 
-	// Not found in cache go get the data the slow way
+	// Not found in cache, so we go get the data the *slow* way
 	$data = my_slow_data_function($id);
 
 	// Store the data in the cache for two hours
