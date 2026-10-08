@@ -5,7 +5,7 @@ Cache is stored using a SQLite database and persists on disk.
 
 ## 🛠️ Requirements
 
-* PHP 8.0+
+* PHP 8.3+
 * PDO functions in PHP
 * SQLite functions in PHP
 * JSON functions in PHP
