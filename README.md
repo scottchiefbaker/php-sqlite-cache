@@ -96,3 +96,13 @@ function get_slow_data($id) {
 	return $data;
 }
 ```
+
+## 🥽 Testing
+
+The unit tests are a standalone PHP script with no dependencies beyond PHP itself:
+
+```
+php unit_tests/tests.php
+```
+
+The igbinary and msgpack tests are skipped automatically when those extensions are not loaded.
