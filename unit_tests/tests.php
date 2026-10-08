@@ -478,6 +478,9 @@ if (getenv('NO_COLOR') !== false || in_array('--no-color', $argv, true)) {
 	$use_color = false;
 }
 
+// --simple: only print failed tests and the summary
+$simple = in_array('--simple', $argv, true);
+
 function paint(string $text, string $code, bool $on): string {
 	return $on ? "\033[{$code}m{$text}\033[0m" : $text;
 }
@@ -488,14 +491,18 @@ $skipped = 0;
 
 foreach ($TESTS as $t) {
 	if ($t['ext'] !== null && !extension_loaded($t['ext'])) {
-		echo paint("SKIP", "33", $use_color) . "  {$t['name']} (ext {$t['ext']} not loaded)\n";
+		if (!$simple) {
+			echo paint("SKIP", "33", $use_color) . "  {$t['name']} (ext {$t['ext']} not loaded)\n";
+		}
 		$skipped++;
 		continue;
 	}
 
 	try {
 		($t['fn'])();
-		echo paint("PASS", "32", $use_color) . "  {$t['name']}\n";
+		if (!$simple) {
+			echo paint("PASS", "32", $use_color) . "  {$t['name']}\n";
+		}
 		$passed++;
 	} catch (\Throwable $e) {
 		echo paint("FAIL", "31;1", $use_color) . "  {$t['name']}\n";
